@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MAD</string>
+    <string name="Email">Email</string>
+    <string name="password">Password</string>
+    <string name="Login">Login\n</string>
+    <string name="Register">Register\n</string>
+    <string name="FullName">Full Name\n</string>
+</resources>

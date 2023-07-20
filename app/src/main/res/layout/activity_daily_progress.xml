@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".DailyProgress">
+
+    <ImageButton
+        android:id="@+id/btn_pp"
+        android:layout_width="49dp"
+        android:layout_height="51dp"
+        android:backgroundTint="#000000"
+        android:contentDescription="Button to go to profile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.035"
+        app:srcCompat="@drawable/defaultpp2" />
+
+    <TextView
+        android:id="@+id/textheading"
+        android:layout_width="234dp"
+        android:layout_height="48dp"
+        android:fontFamily="monospace"
+        android:text="Daily Progress"
+        android:textAlignment="center"
+        android:textColor="#E3D8D8"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.054" />
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="56dp"
+        android:layout_height="59dp"
+        android:backgroundTint="#000000"
+        android:contentDescription="Button to go to home screen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.041"
+        app:srcCompat="@drawable/btnback" />
+
+
+    <ImageButton
+        android:id="@+id/add_task"
+        android:layout_width="61dp"
+        android:layout_height="54dp"
+        android:backgroundTint="#000000"
+        android:contentDescription="Button to add tasks"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976"
+        app:srcCompat="@drawable/add" />
+
+    <EditText
+        android:id="@+id/searchbar"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:drawableLeft="@android:drawable/ic_menu_search"
+        android:drawablePadding="20sp"
+
+        android:hint="Search Tasks"
+        android:inputType="text"
+        android:paddingLeft="20sp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#373535"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.161" />
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="407dp"
+        android:layout_height="439dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.651" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
