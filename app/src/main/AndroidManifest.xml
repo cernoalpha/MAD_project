@@ -16,7 +16,11 @@
         android:theme="@style/Theme.MAD"
         tools:targetApi="31">
         <activity
+            android:name=".Taskinput"
+            android:exported="false" />
+        <activity
             android:name=".DailyProgress"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false" />
         <activity
             android:name=".Profile"

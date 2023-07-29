@@ -15,10 +15,10 @@
         android:contentDescription="Button to go to profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintHorizontal_bias="0.955"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.035"
+        app:layout_constraintVertical_bias="0.023"
         app:srcCompat="@drawable/defaultpp2" />
 
     <TextView
@@ -38,6 +38,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.054" />
 
+
     <ImageButton
         android:id="@+id/btn_back"
         android:layout_width="56dp"
@@ -46,12 +47,11 @@
         android:contentDescription="Button to go to home screen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.041"
+        app:layout_constraintVertical_bias="0.023"
         app:srcCompat="@drawable/btnback" />
-
 
     <ImageButton
         android:id="@+id/add_task"
@@ -85,18 +85,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.161" />
 
-    <ListView
-        android:id="@+id/listview"
-        android:layout_width="407dp"
-        android:layout_height="439dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="430dp"
+        android:paddingLeft="10sp"
+        android:paddingTop="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.651" />
-
-
+        app:layout_constraintVertical_bias="0.667" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

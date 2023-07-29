@@ -1,7 +1,11 @@
 package com.example.mad;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,17 +17,30 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.mad.task.Task;
+import com.example.mad.task.TaskAdapter;
+import com.example.mad.task.TaskManager;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class DailyProgress extends AppCompatActivity {
 
     EditText searchbar;
-    ListView listView;
     ImageButton back, profile, add;
+    RecyclerView recyclerView;
 
-    List<String> tasks;
-    ArrayAdapter<String> adapter;
+    TaskManager taskManager;
+    TaskAdapter taskAdapter;
+    List<Task> allTasks = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +48,35 @@ public class DailyProgress extends AppCompatActivity {
         setContentView(R.layout.activity_daily_progress);
 
         searchbar = findViewById(R.id.searchbar);
-        listView = findViewById(R.id.listview);
         back = findViewById(R.id.btn_back);
         profile = findViewById(R.id.btn_pp);
         add = findViewById(R.id.add_task);
 
-        tasks = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tasks);
-        listView.setAdapter(adapter);
+
+
+        taskManager = new TaskManager();
+        taskAdapter = new TaskAdapter(allTasks);
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(taskAdapter);
+        retrieveTasksFromFirebase();
+
+
+        searchbar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                taskAdapter.filterTasks(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,51 +84,58 @@ public class DailyProgress extends AppCompatActivity {
                 addTask();
             }
         });
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String task = tasks.get(position);
-                Toast.makeText(DailyProgress.this, "Clicked: " + task, Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
-        searchbar.addTextChangedListener(new TextWatcher() {
+        profile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // Not used in this example
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filterTasks(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // Not used in this example
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Profile.class);
+                startActivity(intent);
             }
         });
+
+
     }
 
-    private void filterTasks(String query) {
-        List<String> filteredTasks = new ArrayList<>();
-        for (String task : tasks) {
-            if (task.toLowerCase().contains(query.toLowerCase())) {
-                filteredTasks.add(task);
-            }
+    private void retrieveTasksFromFirebase() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            // Handle the case when the current user is not logged in
+            return;
         }
-        adapter.clear();
-        adapter.addAll(filteredTasks);
-        adapter.notifyDataSetChanged();
+
+        String currentUserId = currentUser.getUid();
+        DatabaseReference tasksRef = FirebaseDatabase.getInstance().getReference().child("users").child(currentUserId).child("tasks");
+        tasksRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                allTasks.clear(); // Clear the existing list before adding new tasks
+                for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
+                    Task task = taskSnapshot.getValue(Task.class);
+                    if (task != null) {
+                        allTasks.add(task);
+                    }
+                }
+                taskAdapter.setTasks(allTasks); // Update the adapter with the new list of tasks
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle database error if needed
+            }
+        });
     }
 
 
     private void addTask() {
-        String newTask = searchbar.getText().toString().trim();
-        if (!newTask.isEmpty()) {
-            tasks.add(newTask);
-            adapter.notifyDataSetChanged();
-            searchbar.setText("");
+        Intent intent = new Intent(getApplicationContext(), Taskinput.class);
+        startActivity(intent);
         }
-    }
 }
