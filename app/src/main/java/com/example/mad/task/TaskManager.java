@@ -31,6 +31,9 @@ public class TaskManager {
     }
 
     public void saveTask(Task task, OnCompleteListener<Void> onCompleteListener) {
+        String category = assignCategory(task);
+        task.setCategory(category);
+
         String taskId = tasksRef.push().getKey();
         task.setTaskId(taskId);
 
@@ -41,6 +44,7 @@ public class TaskManager {
     public void updateTask(Task task) {
         String taskId = task.getTaskId();
         tasksRef.child(taskId).setValue(task);
+        tasksRef.child(task.getTaskId()).setValue(task);
     }
 
     public void deleteTask(Task task) {
@@ -52,6 +56,27 @@ public class TaskManager {
         void onTaskDataChange(List<Task> tasks);
         void onCancelled(DatabaseError databaseError);
     }
+
+    private String assignCategory(Task task) {
+        String title = task.getTitle().toLowerCase();
+        String description = task.getDescription().toLowerCase();
+
+        // Check for keywords in the title and description to assign categories
+        if (containsKeyword(title, "work") || containsKeyword(description, "work")) {
+            return "Work";
+        } else if (containsKeyword(title, "study") || containsKeyword(description, "study")) {
+            return "Study";
+        } else if (containsKeyword(title, "exercise") || containsKeyword(description, "exercise")) {
+            return "Exercise";
+        } else {
+            return "Other";
+        }
+    }
+
+    private boolean containsKeyword(String text, String keyword) {
+        return text.contains(keyword);
+    }
+
 
     public void getAllTasks(TaskListener listener) {
         tasksRef.addValueEventListener(new ValueEventListener() {

@@ -1,109 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="#F5F5F5"
+
     tools:context=".Profile">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/display_pp"
-        android:layout_width="183dp"
-        android:layout_height="152dp"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.123" />
-
-    <TextView
-        android:id="@+id/display_name"
-        android:layout_width="301dp"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:textAlignment="viewStart"
-        android:textColor="#DDD8D8"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.485" />
+        android:id="@+id/card"
+        android:layout_marginTop="20sp"
+        app:cardCornerRadius="30sp">
 
-    <TextView
-        android:id="@+id/display_email"
-        android:layout_width="296dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:textColor="#DDD7D7"
-        android:textSize="26sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.434"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.686" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="#FDF3E7"
+            android:padding="20sp"
+            android:orientation="vertical">
+
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/display_pp"
+                android:layout_width="180dp"
+                android:layout_marginTop="50sp"
+                android:layout_height="180dp"
+                android:background="@drawable/defaultpp" />
+
+            <TextView
+                android:id="@+id/texxtName"
+                android:layout_marginTop="50sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textSize="22sp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#A3C4BC"
+                android:layout_marginTop="10sp"
+                app:cardCornerRadius="10sp">
+
+                <TextView
+                    android:id="@+id/display_name"
+                    android:layout_width="wrap_content"
+                    android:padding="10sp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:textAlignment="center"
+                    android:textColor="#333333"
+                    android:textSize="28sp" />
+
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/textEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:text="Email"
+                android:textSize="22sp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#A3C4BC"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="50sp"
+                app:cardCornerRadius="10sp">
+
+                <TextView
+                    android:id="@+id/display_email"
+                    android:padding="10sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#333333"
+                    android:textSize="22sp" />
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#A3C4BC"
+                app:cardCornerRadius="10sp">
+
+                <Switch
+                    android:layout_width="250sp"
+                    android:layout_height="50sp"
+                    android:padding="10sp"
+                    android:id="@+id/button_notify"
+                    android:text="Notifications">
+
+                </Switch>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
 
     <Button
         android:id="@+id/btn_logout"
         android:layout_width="165dp"
+        android:layout_below="@+id/card"
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="120sp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="#8DB6CD"
         android:fontFamily="monospace"
         android:text="Log Out"
         android:textColor="#605F5F"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.88" />
+        android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/texxtName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.142"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.417" />
-
-    <TextView
-        android:id="@+id/textEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.143"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.621" />
-
-    <ImageButton
-        android:id="@+id/btnback"
-        android:layout_width="55dp"
-        android:layout_height="53dp"
-        android:backgroundTint="#000000"
-        android:contentDescription="Button to go to home screen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
-        app:srcCompat="@drawable/btnback" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

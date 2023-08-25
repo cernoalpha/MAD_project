@@ -59,9 +59,9 @@ public class Taskinput extends AppCompatActivity {
         StartDate.setText(currentDate);
 
 
-
         seekBar = findViewById(R.id.seekBar);
         txtpnt = findViewById(R.id.txtpnt);
+
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

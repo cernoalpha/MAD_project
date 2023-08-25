@@ -1,102 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="#F5F5F5"
     tools:context=".DailyProgress">
 
-    <ImageButton
-        android:id="@+id/btn_pp"
-        android:layout_width="49dp"
-        android:layout_height="51dp"
-        android:backgroundTint="#000000"
-        android:contentDescription="Button to go to profile"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.955"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
-        app:srcCompat="@drawable/defaultpp2" />
 
-    <TextView
-        android:id="@+id/textheading"
-        android:layout_width="234dp"
-        android:layout_height="48dp"
-        android:fontFamily="monospace"
-        android:text="Daily Progress"
-        android:textAlignment="center"
-        android:textColor="#E3D8D8"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.054" />
-
-
-    <ImageButton
-        android:id="@+id/btn_back"
-        android:layout_width="56dp"
-        android:layout_height="59dp"
-        android:backgroundTint="#000000"
-        android:contentDescription="Button to go to home screen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.045"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
-        app:srcCompat="@drawable/btnback" />
-
-    <ImageButton
-        android:id="@+id/add_task"
-        android:layout_width="61dp"
-        android:layout_height="54dp"
-        android:backgroundTint="#000000"
-        android:contentDescription="Button to add tasks"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976"
-        app:srcCompat="@drawable/add" />
-
-    <EditText
-        android:id="@+id/searchbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="63dp"
-        android:drawableLeft="@android:drawable/ic_menu_search"
-        android:drawablePadding="20sp"
-
-        android:hint="Search Tasks"
-        android:inputType="text"
-        android:paddingLeft="20sp"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#373535"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.161" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="430dp"
-        android:paddingLeft="10sp"
-        android:paddingTop="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.667" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:padding="2sp"
+            android:orientation="horizontal">
+
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10sp"
+                android:backgroundTint="#F5F5F5"
+                android:contentDescription="Button to go to home screen"
+                app:srcCompat="@drawable/home" />
+
+
+
+            <TextView
+                android:id="@+id/textheading"
+                android:layout_width="235dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:fontFamily="monospace"
+                android:text="Tasks"
+                android:gravity="center_vertical"
+                android:paddingLeft="90sp"
+                android:textColor="#333333"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+
+            <ImageButton
+                android:id="@+id/btn_pp"
+                android:layout_width="50dp"
+                android:layout_marginLeft="25sp"
+                android:layout_height="50dp"
+                android:contentDescription="Button to go to profile"
+                app:srcCompat="@drawable/defaultpp2" />
+
+        </LinearLayout>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FDF3E7"
+            android:layout_marginTop="30sp"
+            app:cardCornerRadius="30sp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <EditText
+                    android:id="@+id/searchbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="63dp"
+                    android:drawableLeft="@android:drawable/ic_menu_search"
+                    android:drawablePadding="20sp"
+
+                    android:hint="Search Tasks"
+                    android:inputType="text"
+                    android:paddingLeft="20sp"
+                    android:textColor="#333333"
+                    android:textColorHint="#B8C3BC" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="20sp"
+                    android:layout_height="500dp"
+                    android:padding="10sp" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <ImageButton
+            android:id="@+id/add_task"
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:layout_marginTop="10sp"
+            android:backgroundTint="#8DB6CD"
+            android:contentDescription="Button to add tasks"
+            app:srcCompat="@drawable/add" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

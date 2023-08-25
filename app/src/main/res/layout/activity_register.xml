@@ -1,109 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
-    android:gravity="center"
+    android:background="#F5F5F5"
     tools:context=".Register">
 
 
-    <TextView
-        android:id="@+id/selectpp"
-        android:layout_width="408dp"
-        android:layout_height="45dp"
-        android:layout_weight="1"
-        android:fontFamily="monospace"
-        android:text="Select you profife picture"
-        android:textAlignment="center"
-        android:textColor="#6E6A6A"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.062" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/email"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:hint="@string/Email"
-        android:textAlignment="center"
-        android:textColor="#E4E4E4"
-        android:textColorHint="#8C8888"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.559" />
+        android:layout_marginTop="15sp"
+        app:cardCornerRadius="30sp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FDF3E7"
+            android:padding="20sp"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="#A3C4BC"
+                app:cardCornerRadius="10sp">
+
+                <TextView
+                    android:id="@+id/selectpp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50sp"
+                    android:padding="10sp"
+                    android:fontFamily="monospace"
+                    android:text="Select you profife picture"
+                    android:textColor="#333333"
+                    android:textSize="18sp" />
+
+            </androidx.cardview.widget.CardView>
 
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/fullname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:hint="@string/FullName"
-        android:textAlignment="center"
-        android:textColor="#E4E4E4"
-        android:textColorHint="#8C8888"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.46" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:hint="@string/password"
-        android:textAlignment="center"
-        android:textColor="#EDEDED"
-        android:textColorHint="#8C8888"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.657" />
-
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="213dp"
-        android:layout_height="57dp"
-        android:backgroundTint="#2452DA"
-        android:text="@string/Register"
-        android:textSize="22sp"
-        app:circularflow_defaultRadius="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.796" />
-
-    <ImageView
-        android:id="@+id/profilepic"
-        android:layout_width="180dp"
-        android:layout_height="173dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.161"
-        tools:srcCompat="@drawable/defaultpp" />
+            <ImageView
+                android:id="@+id/profilepic"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_gravity="center"
+                android:layout_margin="30sp"
+                android:foreground="@drawable/defaultpp"
+                android:visibility="visible"
+                tools:srcCompat="@drawable/defaultpp" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#A3C4BC"
+                android:layout_marginTop="10sp"
+                app:cardCornerRadius="10sp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:hint="@string/Email"
+                    android:textAlignment="center"
+                    android:textColor="#333333"
+                    android:textColorHint="#D6E3DB"
+                    android:textSize="20sp" />
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:backgroundTint="#A3C4BC"
+                app:cardCornerRadius="10sp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fullname"
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:fontFamily="monospace"
+                    android:hint="@string/FullName"
+                    android:textAlignment="center"
+                    android:textColor="#333333"
+                    android:textColorHint="#D6E3DB"
+                    android:textSize="18sp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:backgroundTint="#A3C4BC"
+                app:cardCornerRadius="10sp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:hint="@string/password"
+                    android:textAlignment="center"
+                    android:textColor="#333333"
+                    android:textColorHint="#D6E3DB"
+                    android:textSize="20sp" />
+            </androidx.cardview.widget.CardView>
+
+
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="213dp"
+                android:layout_height="57dp"
+                android:backgroundTint="#8DB6CD"
+                android:layout_gravity="center"
+                android:layout_marginTop="40sp"
+                android:layout_marginBottom="30sp"
+                android:text="@string/Register"
+                android:textSize="22sp"
+                app:circularflow_defaultRadius="30sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

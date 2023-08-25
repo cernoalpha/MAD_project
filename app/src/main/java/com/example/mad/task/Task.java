@@ -2,7 +2,7 @@ package com.example.mad.task;
 
 import java.io.Serializable;
 
-public class Task {
+public class Task implements Serializable{
     private String taskId;
     private String userId; // Added field for user ID
     private String title;
@@ -10,6 +10,7 @@ public class Task {
     private int progress;
     private String startDate;
     private String endDate;
+    private String category;
 
     // Default constructor (required for Firebase)
     public Task() {
@@ -22,6 +23,7 @@ public class Task {
         this.progress = progress;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.category = "";
     }
 
     public String getTaskId() {
@@ -78,5 +80,11 @@ public class Task {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+    public String getCategory() {
+        return category;
+    }
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
