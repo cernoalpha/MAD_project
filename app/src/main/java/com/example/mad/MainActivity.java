@@ -1,9 +1,6 @@
 package com.example.mad;
 
-import static com.google.android.material.color.utilities.MaterialDynamicColors.error;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,12 +15,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mad.task.Task;
 import com.example.mad.task.TaskManager;
-
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -37,11 +34,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.AxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
-
-
-import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -60,6 +53,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -68,13 +64,14 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout linearCategoryProgress ,linearpiechart, linearlinechart;
     private Button lolButton, retbutton, taskbutton;
     private CardView overall_progress ,categorycardview;
-    private ImageView profile_button;
+    CircleImageView profile_button;
     DatabaseReference userRef;
     PieChart pieChart;
     LineChart lineChart;
     FirebaseAuth firebaseAuth;
     ValueEventListener valueEventListener;
     TextView notask;
+
 
 
 
@@ -110,11 +107,74 @@ public class MainActivity extends AppCompatActivity {
         linearpiechart.setVisibility(View.INVISIBLE);
         linearlinechart.setVisibility(View.INVISIBLE);
 
+        int Lavender = ContextCompat.getColor(this, R.color.Lavender_Gray);
+        int Blue = ContextCompat.getColor(this, R.color.Dusty_Blue);
+
+        retbutton.setBackgroundColor(Lavender);
+        lolButton.setBackgroundColor(Blue);
+
+
+        //-----------------------------------------------------------------
+
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        String userId = currentUser.getUid();
+        userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
+
+        valueEventListener = userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (isDestroyed()) {
+                    return;
+                }
+                String image = dataSnapshot.child("pimage").getValue(String.class);
+
+
+                RequestOptions requestOptions = new RequestOptions()
+                        .placeholder(R.drawable.defaultpp)
+                        .error(R.drawable.defaultpp);
+
+                Glide.with(MainActivity.this)
+                        .setDefaultRequestOptions(requestOptions)
+                        .load(image)
+                        .into(profile_button);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                int errorCode = error.getCode();
+                String errorMessage = error.getMessage();
+
+                // Handle the error based on the error code or message
+                switch (errorCode) {
+                    case DatabaseError.PERMISSION_DENIED:
+                        // Handle permission denied error
+                        Toast.makeText(MainActivity.this, "Permission denied. Please check your database rules.", Toast.LENGTH_SHORT).show();
+                        break;
+                    case DatabaseError.NETWORK_ERROR:
+                        // Handle network error
+                        Toast.makeText(MainActivity.this, "Network error. Please check your internet connection.", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        // Handle other errors
+                        Toast.makeText(MainActivity.this, "Database error occurred: " + errorMessage, Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+
+
+        //-----------------------------------------------------------------
+
 
 
         lolButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                lolButton.setBackgroundColor(Lavender);
+                retbutton.setBackgroundColor(Blue);
                 linearCategoryProgress.setVisibility(View.INVISIBLE);
                 categorycardview.setVisibility(View.INVISIBLE);
                 overall_progress.setVisibility(View.INVISIBLE);
@@ -126,6 +186,8 @@ public class MainActivity extends AppCompatActivity {
         retbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                lolButton.setBackgroundColor(Blue);
+                retbutton.setBackgroundColor(Lavender);
                 linearCategoryProgress.setVisibility(View.VISIBLE);
                 categorycardview.setVisibility(View.VISIBLE);
                 overall_progress.setVisibility(View.VISIBLE);
@@ -234,47 +296,65 @@ public class MainActivity extends AppCompatActivity {
 
     //---------------------------------------------------------------------
     private void setLinechart(List<Task> tasks) {
-
         List<Entry> entriesProgress = new ArrayList<>();
         List<String> xAxisLabels = new ArrayList<>();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd", Locale.getDefault());
 
+        // Create a map to store unique dates and their corresponding average progress
+        Map<Date, Float> dateProgressMap = new HashMap<>();
+
         if (tasks.isEmpty()) {
-            lineChart.clear(); // Clear any existing data
+            lineChart.clear();
             lineChart.setNoDataText("You need to make some tasks first");
-            lineChart.setDescription("No Data Available"); // Set a description for the empty chart
-            lineChart.invalidate(); // Refresh the chart
+            lineChart.setDescription("No Data Available");
+            lineChart.invalidate();
         } else {
+            // Iterate through the tasks and update the dateProgressMap
+            for (Task task : tasks) {
+                Date date = parseDate(task.getStartDate());
 
-            for (int i = 0; i < tasks.size(); i++) {
-                Task task = tasks.get(i);
-                Date date = parseDate(task.getStartDate()); // Implement your date parsing logic
-                float xValue = i; // X-axis value based on position
-                float progressValue = calculateAverageProgressOfTasksOnDate(date, tasks);
-
-                entriesProgress.add(new Entry(xValue, progressValue));
-
-                xAxisLabels.add(dateFormat.format(date));
+                // Update the average progress for the corresponding date
+                if (dateProgressMap.containsKey(date)) {
+                    float currentProgress = dateProgressMap.get(date);
+                    float newProgress = (currentProgress + task.getProgress()) / 2; // Average progress
+                    dateProgressMap.put(date, Math.min(Math.max(newProgress, 0), 100)); // Cap between 0 and 100
+                } else {
+                    dateProgressMap.put(date, (float) Math.min(Math.max(task.getProgress(), 0), 100)); // Cap between 0 and 100
+                }
             }
 
+            // Sort the map by date to ensure chronological order
+            TreeMap<Date, Float> sortedDateProgressMap = new TreeMap<>(dateProgressMap);
+
+            int index = 0;
+            for (Map.Entry<Date, Float> entry : sortedDateProgressMap.entrySet()) {
+                Date date = entry.getKey();
+                float progressValue = entry.getValue();
+                float xValue = index;
+
+                entriesProgress.add(new Entry(xValue, progressValue));
+                xAxisLabels.add(dateFormat.format(date));
+
+                index++;
+            }
+
+            // Create the LineDataSet, LineData, and configure the chart as before
             LineDataSet dataSetProgress = new LineDataSet(entriesProgress, "Progress");
             dataSetProgress.setColor(Color.BLUE);
             dataSetProgress.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-            dataSetProgress.setDrawFilled(true); // Enable filling the area under the line
-            dataSetProgress.setFillColor(Color.GREEN); // Set the fill color
-            dataSetProgress.setFillAlpha(100); // Set the fill alpha (transparency)
+            dataSetProgress.setDrawFilled(true);
+            dataSetProgress.setFillColor(Color.GREEN);
+            dataSetProgress.setFillAlpha(100);
 
             LineData lineData = new LineData(dataSetProgress);
 
             lineChart.setData(lineData);
             lineChart.notifyDataSetChanged();
 
-
             XAxis xAxis = lineChart.getXAxis();
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
             xAxis.setDrawGridLines(false);
-
             xAxis.setValueFormatter(new AxisValueFormatter() {
                 @Override
                 public String getFormattedValue(float value, AxisBase axis) {
@@ -282,7 +362,7 @@ public class MainActivity extends AppCompatActivity {
                     if (index >= 0 && index < xAxisLabels.size()) {
                         return xAxisLabels.get(index);
                     }
-                    return ""; // Return an empty label for out-of-range values
+                    return "";
                 }
 
                 @Override
@@ -290,25 +370,24 @@ public class MainActivity extends AppCompatActivity {
                     return 0;
                 }
             });
-            xAxis.setGranularity(1f); // Ensure each label is shown
+            xAxis.setGranularity(1f);
 
             YAxis yAxisLeft = lineChart.getAxisLeft();
             yAxisLeft.setDrawGridLines(false);
             yAxisLeft.setEnabled(true);
+            yAxisLeft.setAxisMinValue(0f);
+            yAxisLeft.setAxisMaxValue(100f);
 
             YAxis yAxisRight = lineChart.getAxisRight();
             yAxisRight.setEnabled(false);
-            yAxisLeft.setAxisMinValue(0f); // Set the minimum value
-            yAxisLeft.setAxisMaxValue(100f); // Set the maximum value
 
             lineChart.setDescription("");
-            lineChart.getLegend().setEnabled(false); // Disable legend for progress chart
-
+            lineChart.getLegend().setEnabled(false);
 
             lineChart.invalidate();
-
         }
     }
+
     //---------------------------------------------------------------------
     private void setPiechart(List<Task> tasks) {
 

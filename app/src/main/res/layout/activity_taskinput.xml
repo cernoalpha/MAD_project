@@ -35,8 +35,11 @@
 
         <SeekBar
             android:id="@+id/seekBar"
-            android:layout_width="361dp"
+            android:layout_width="355dp"
             android:layout_height="32dp"
+            android:thumb="@drawable/custom_seekbar_thumb"
+            android:progressTint="#0077B6"
+            android:progressBackgroundTint="#FA0000"
             android:max="100"
             android:progress="0" />
 

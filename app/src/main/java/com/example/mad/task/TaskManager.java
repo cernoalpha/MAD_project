@@ -68,6 +68,24 @@ public class TaskManager {
             return "Study";
         } else if (containsKeyword(title, "exercise") || containsKeyword(description, "exercise")) {
             return "Exercise";
+        } else if (containsKeyword(title, "read") || containsKeyword(description, "read")) {
+            return "Books";
+        } else if (containsKeyword(title, "reply") || containsKeyword(description, "reply")) {
+            return "Communication";
+        } else if (containsKeyword(title, "shopping") || containsKeyword(description, "shopping")) {
+            return "Shopping";
+        } else if (containsKeyword(title, "meeting") || containsKeyword(description, "meeting")) {
+            return "Meetings";
+        } else if (containsKeyword(title, "health") || containsKeyword(description, "health")) {
+            return "Health";
+        } else if (containsKeyword(title, "family") || containsKeyword(description, "family")) {
+            return "Family";
+        } else if (containsKeyword(title, "home") || containsKeyword(description, "home")) {
+            return "Home";
+        } else if (containsKeyword(title, "finance") || containsKeyword(description, "finance")) {
+            return "Finance";
+        } else if (containsKeyword(title, "project") || containsKeyword(description, "project")) {
+            return "Projects";
         } else {
             return "Other";
         }

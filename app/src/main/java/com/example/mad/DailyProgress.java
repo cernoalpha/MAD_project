@@ -17,6 +17,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.mad.task.Task;
 import com.example.mad.task.TaskAdapter;
 import com.example.mad.task.TaskManager;
@@ -31,15 +33,22 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class DailyProgress extends AppCompatActivity {
 
     EditText searchbar;
-    ImageButton back, profile, add;
+    ImageButton back, add;
     RecyclerView recyclerView;
+    CircleImageView profile;
 
     TaskManager taskManager;
     TaskAdapter taskAdapter;
     List<Task> allTasks = new ArrayList<>();
+
+    DatabaseReference userRef;
+    FirebaseAuth firebaseAuth;
+    ValueEventListener valueEventListener;
 
 
     @Override
@@ -62,6 +71,59 @@ public class DailyProgress extends AppCompatActivity {
         recyclerView.setAdapter(taskAdapter);
         retrieveTasksFromFirebase();
 
+        //-----------------------------------------------------------------
+
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        String userId = currentUser.getUid();
+        userRef = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
+
+        valueEventListener = userRef.addValueEventListener(new ValueEventListener() {
+                                                               @Override
+                                                               public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                   if (isDestroyed()) {
+                                                                       return;
+                                                                   }
+                                                                   String image = dataSnapshot.child("pimage").getValue(String.class);
+
+
+                                                                   RequestOptions requestOptions = new RequestOptions()
+                                                                           .placeholder(R.drawable.defaultpp)
+                                                                           .error(R.drawable.defaultpp);
+
+                                                                   Glide.with(DailyProgress.this)
+                                                                           .setDefaultRequestOptions(requestOptions)
+                                                                           .load(image)
+                                                                           .into(profile);
+
+                                                               }
+
+                                                               @Override
+                                                               public void onCancelled(@NonNull DatabaseError error) {
+                                                                   int errorCode = error.getCode();
+                                                                   String errorMessage = error.getMessage();
+
+                                                                   // Handle the error based on the error code or message
+                                                                   switch (errorCode) {
+                                                                       case DatabaseError.PERMISSION_DENIED:
+                                                                           // Handle permission denied error
+                                                                           Toast.makeText(DailyProgress.this, "Permission denied. Please check your database rules.", Toast.LENGTH_SHORT).show();
+                                                                           break;
+                                                                       case DatabaseError.NETWORK_ERROR:
+                                                                           // Handle network error
+                                                                           Toast.makeText(DailyProgress.this, "Network error. Please check your internet connection.", Toast.LENGTH_SHORT).show();
+                                                                           break;
+                                                                       default:
+                                                                           // Handle other errors
+                                                                           Toast.makeText(DailyProgress.this, "Database error occurred: " + errorMessage, Toast.LENGTH_SHORT).show();
+                                                                           break;
+                                                                   }
+                                                               }
+        });
+
+
+            //-----------------------------------------------------------------
 
         searchbar.addTextChangedListener(new TextWatcher() {
             @Override

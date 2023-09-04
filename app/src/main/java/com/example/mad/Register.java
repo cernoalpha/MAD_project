@@ -48,13 +48,13 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         IVprofile = findViewById(R.id.profilepic);
-        browse = (TextView) findViewById(R.id.selectpp);
+        browse = findViewById(R.id.selectpp);
 
 
-        etEmail = (TextInputEditText) findViewById(R.id.email);
-        etPassword = (TextInputEditText) findViewById(R.id.password);
+        etEmail = findViewById(R.id.email);
+        etPassword = findViewById(R.id.password);
         etFullName = findViewById(R.id.fullname);
-        btnReg = (Button) findViewById(R.id.btn_register);
+        btnReg = findViewById(R.id.btn_register);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -68,12 +68,18 @@ public class Register extends AppCompatActivity {
             String email = String.valueOf(etEmail.getText());
             String password = String.valueOf(etPassword.getText());
 
-            signUp(name, email, password);
+            if(name.isEmpty() || email.isEmpty() ||password.isEmpty()){
+                Toast.makeText(Register.this, "Please enter all the details",
+                        Toast.LENGTH_SHORT).show();
+            }
+             else if (filepath == null) {
+                Toast.makeText(Register.this, "Please select a profile picture", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                signUp(name, email, password);
+            }
         });
     }
-
-
-
 
     private void openImagePicker() {
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -125,8 +131,8 @@ public class Register extends AppCompatActivity {
                             Toast.makeText(Register.this, "Failed to save user data: " + errorMessage, Toast.LENGTH_SHORT).show();
                         }
                     });
-            }
         }
+    }
 
 
     private void uploadImageToFirebaseStorage(String userId, Uri filepath) {
@@ -142,7 +148,6 @@ public class Register extends AppCompatActivity {
                                 .addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(Register.this, "Registration successful!", Toast.LENGTH_SHORT).show();
-
                                         // Intent to profile page
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);
@@ -157,6 +162,5 @@ public class Register extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     Toast.makeText(Register.this, "Failed to upload profile image.", Toast.LENGTH_SHORT).show();
                 });
-     }
     }
-
+}

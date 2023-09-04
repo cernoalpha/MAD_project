@@ -48,13 +48,12 @@
                 android:textStyle="bold"/>
 
 
-            <ImageButton
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/btn_pp"
                 android:layout_width="50dp"
-                android:layout_marginLeft="25sp"
+                android:layout_marginLeft="10sp"
                 android:layout_height="50dp"
-                android:contentDescription="Button to go to profile"
-                app:srcCompat="@drawable/defaultpp2" />
+                android:background="@drawable/defaultpp" />
 
         </LinearLayout>
 

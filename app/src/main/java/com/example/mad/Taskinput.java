@@ -140,28 +140,31 @@ public class Taskinput extends AppCompatActivity {
         String startDate = StartDate.getText().toString();
         String endDate = EndDate.getText().toString();
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser == null) {
-            // Handle the case when the current user is not logged in
-            return;
-        }
+        if (title.isEmpty() || description.isEmpty() || endDate.isEmpty()) {
+            Toast.makeText(Taskinput.this, "Please enter all the details", Toast.LENGTH_SHORT).show();
+        } else {
 
-        String currentUserId = currentUser.getUid();
-        Task task = new Task(currentUserId, title, description, progress, startDate, endDate);
-
-        taskManager.saveTask(task, taskSaveTask -> {
-            if (taskSaveTask.isSuccessful()) {
-                Toast.makeText(Taskinput.this, "Task saved successfully!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), DailyProgress.class);
-                startActivity(intent);
-                finish();
-            } else {
-                Toast.makeText(Taskinput.this, "Failed to save task. Please try again.", Toast.LENGTH_SHORT).show();
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            if (currentUser == null) {
+                // Handle the case when the current user is not logged in
+                return;
             }
-        });
+
+            String currentUserId = currentUser.getUid();
+            Task task = new Task(currentUserId, title, description, progress, startDate, endDate);
+
+            taskManager.saveTask(task, taskSaveTask -> {
+                if (taskSaveTask.isSuccessful()) {
+                    Toast.makeText(Taskinput.this, "Task saved successfully!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), DailyProgress.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(Taskinput.this, "Failed to save task. Please try again.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
-
-
 
 
     long calculateDaysLeft() {

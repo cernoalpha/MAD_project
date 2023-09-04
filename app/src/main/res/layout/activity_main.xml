@@ -19,16 +19,19 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:text="Home"
+            android:textStyle="bold"
             android:textColor="#333333"
             android:textSize="18dp"></TextView>
 
-        <ImageView
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_button"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_marginLeft="250dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="265dp"
             android:layout_marginTop="10dp"
-            app:srcCompat="@drawable/defaultpp"></ImageView>
+            android:background="@drawable/defaultpp" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -78,7 +81,7 @@
             android:id="@+id/button_task"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="15dp"
             android:backgroundTint="#8DB6CD"
             android:text="Tasks" />
 
@@ -127,7 +130,9 @@
                 android:id="@+id/progressBarOverall"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="15sp"
+                android:progressTint="#DAA49A"
+                android:progressBackgroundTint="#D5A021"
                 android:layout_marginTop="5dp"
                 android:max="100"
                 android:paddingLeft="30dp"
@@ -198,7 +203,7 @@
     <LinearLayout
         android:id="@+id/linearlinechart"
         android:layout_marginTop="20sp"
-        android:padding="15sp"
+        android:padding="10sp"
         android:background="#FDF3E7"
         android:layout_width="match_parent"
         android:layout_below="@+id/linearpiechart"
@@ -207,6 +212,7 @@
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/lineChart"
+            android:layout_marginBottom="5sp"
             android:layout_width="match_parent"
             android:layout_height="230dp"
             />

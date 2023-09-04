@@ -42,15 +42,15 @@
 
 
 
-            <ImageView
+
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profilepic"
                 android:layout_width="180dp"
-                android:layout_height="180dp"
                 android:layout_gravity="center"
                 android:layout_margin="30sp"
-                android:foreground="@drawable/defaultpp"
-                android:visibility="visible"
-                tools:srcCompat="@drawable/defaultpp" />
+                android:layout_height="180dp"
+                android:background="@drawable/defaultpp"
+                 />
 
 
 
@@ -67,6 +67,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
                     android:hint="@string/Email"
+                    android:inputType="textEmailAddress"
                     android:textAlignment="center"
                     android:textColor="#333333"
                     android:textColorHint="#D6E3DB"
@@ -109,9 +110,11 @@
                     android:fontFamily="monospace"
                     android:hint="@string/password"
                     android:textAlignment="center"
+                    android:inputType="textPassword"
                     android:textColor="#333333"
                     android:textColorHint="#D6E3DB"
                     android:textSize="20sp" />
+
             </androidx.cardview.widget.CardView>
 
 

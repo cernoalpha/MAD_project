@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mad.task.Task;
 import com.example.mad.task.TaskManager;
@@ -93,20 +94,30 @@ public class TaskDetailsActivity extends AppCompatActivity {
     }
 
     private void saveChanges(Task task) {
-        task.setTitle(editTextTitle.getText().toString());
-        task.setDescription(editTextDescription.getText().toString());
-        String progressText = editTextProgress.getText().toString();
-        progressText = progressText.replace("%", "");
-        int progress = Integer.parseInt(progressText);
-        task.setProgress(progress);
 
-        // TODO: Update task details in Firebase using TaskManager.updateTask()
-        TaskManager taskManager = new TaskManager();
-        taskManager.updateTask(task);
+        String newTitle,newDesc;
+        newTitle=editTextTitle.getText().toString();
+        newDesc =editTextDescription.getText().toString();
+        if(newTitle.isEmpty() || newDesc.isEmpty()){
+            Toast.makeText(TaskDetailsActivity.this,"No empty fields",Toast.LENGTH_SHORT).show();
+        }
+        else {
 
-        displayTaskDetails(task); // Update displayed details
+            task.setTitle(newTitle);
+            task.setDescription(newDesc);
+            String progressText = editTextProgress.getText().toString();
+            progressText = progressText.replace("%", "");
+            int progress = Integer.parseInt(progressText);
+            task.setProgress(progress);
 
-        toggleEditMode(task);
+            // TODO: Update task details in Firebase using TaskManager.updateTask()
+            TaskManager taskManager = new TaskManager();
+            taskManager.updateTask(task);
+
+            displayTaskDetails(task); // Update displayed details
+
+            toggleEditMode(task);
+        }
     }
 
     private void toggleEditMode(Task task) {
