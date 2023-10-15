@@ -10,8 +10,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10sp"
         android:background="#FDF3E7"
+        android:id="@+id/card"
         app:cardCornerRadius="30sp">
 
         <LinearLayout
@@ -104,7 +104,7 @@
                 android:layout_width="210sp"
                 android:layout_height="55sp"
                 android:layout_marginLeft="70sp"
-                android:layout_marginBottom="20sp"
+                android:layout_marginBottom="15sp"
                 android:backgroundTint="#8DB6CD"
                 android:text="@string/Login"
                 android:textSize="22sp" />
@@ -120,7 +120,8 @@
         android:text="Sign up instead?"
         android:textAlignment="center"
         android:textColor="#8DB6CD"
+        android:layout_marginBottom="10sp"
         android:textSize="18sp"
-        android:layout_marginTop="710sp"
+        android:layout_below="@+id/card"
          />
 </RelativeLayout>
